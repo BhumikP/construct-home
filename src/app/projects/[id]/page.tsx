@@ -187,7 +187,7 @@ export default function ProjectDetailPage({ params }: Props) {
                           src={project.videoUrl}
                           controls
                           className="w-full h-full object-contain"
-                          poster="https://placehold.co/1600x900.png?text=Video+Preview" // Generic poster
+                          poster="https://placehold.co/1600x900.png"
                           data-ai-hint="video preview"
                         >
                           Your browser does not support the video tag. Please ensure you have placed video files (e.g. MP4) in the `/public/videos` directory and the `videoUrl` in `portfolioData.ts` points to it correctly (e.g., `/videos/your-video.mp4`).

@@ -7,7 +7,7 @@ import { projectsData, type Project } from '@/data/portfolioData';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Image as ImageIcon, Video as VideoIcon } from 'lucide-react';
+import { ArrowLeft, Image as ImageIcon, Video as VideoIcon, Info } from 'lucide-react'; // Added Info icon
 import { ScrollAnimatedComponent } from '@/components/ui/ScrollAnimatedComponent';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -74,127 +74,133 @@ export default function ProjectDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
-      <main className="flex-grow pt-16 bg-background"> {/* pt-16 for fixed header */}
+      <main className="flex-grow pt-16"> {/* pt-16 for fixed header */}
         <ScrollAnimatedComponent animationType="fadeIn">
           <section className="py-12 md:py-16 lg:py-20">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <Button asChild variant="outline" className="mb-8 group">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-12 md:space-y-16">
+              <Button asChild variant="outline" className="mb-4 group inline-flex items-center">
                 <Link href="/#projects">
                   <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
                   Back to All Projects
                 </Link>
               </Button>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-6 md:mb-8 text-center">
-                {project.title}
-              </h1>
+              <div className="text-center">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-4 md:mb-6">
+                  {project.title}
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                  {project.description}
+                </p>
+              </div>
               
-              <p className="text-lg text-muted-foreground mb-8 md:mb-12 text-center max-w-3xl mx-auto">
-                {project.description}
-              </p>
+              {/* Image Gallery Carousel */}
+              <ScrollAnimatedComponent animationType="slideInUp" delay={100}>
+                <Card className="overflow-hidden shadow-xl max-w-4xl mx-auto">
+                  <CardHeader className="p-0">
+                    {project.galleryImages && project.galleryImages.length > 0 ? (
+                      <Carousel
+                        opts={{
+                          align: "start",
+                          loop: true,
+                        }}
+                        className="w-full"
+                      >
+                        <CarouselContent>
+                          {project.galleryImages.map((image, index) => (
+                            <CarouselItem key={index}>
+                              <div className="relative w-full aspect-[16/10] bg-muted">
+                                <Image
+                                  src={image.url}
+                                  alt={image.alt || `${project.title} - Image ${index + 1}`}
+                                  layout="fill"
+                                  objectFit="cover"
+                                  className="transition-transform duration-300 hover:scale-105"
+                                  data-ai-hint={image.dataAiHint || "project image"}
+                                  priority={index === 0} 
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        {project.galleryImages.length > 1 && (
+                          <>
+                            <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
+                            <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
+                          </>
+                        )}
+                      </Carousel>
+                    ) : (
+                      <div className="relative w-full aspect-[16/10] bg-muted flex items-center justify-center">
+                         <ImageIcon className="h-16 w-16 text-muted-foreground" />
+                         <p className="text-muted-foreground ml-2">No gallery images available</p>
+                      </div>
+                    )}
+                  </CardHeader>
+                  <CardContent className="p-6">
+                     <CardTitle className="text-xl flex items-center text-primary">
+                       <ImageIcon className="mr-2 h-5 w-5 text-accent" />
+                       Project Gallery
+                     </CardTitle>
+                  </CardContent>
+                </Card>
+              </ScrollAnimatedComponent>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
-                <ScrollAnimatedComponent animationType="slideInLeft" delay={100} className="md:sticky md:top-24">
-                  <Card className="overflow-hidden shadow-xl">
-                    <CardHeader className="p-0">
-                      {project.galleryImages && project.galleryImages.length > 0 ? (
-                        <Carousel
-                          opts={{
-                            align: "start",
-                            loop: true,
-                          }}
-                          className="w-full"
-                        >
-                          <CarouselContent>
-                            {project.galleryImages.map((image, index) => (
-                              <CarouselItem key={index}>
-                                <div className="relative w-full aspect-[4/3] bg-muted">
-                                  <Image
-                                    src={image.url}
-                                    alt={image.alt || `${project.title} - Image ${index + 1}`}
-                                    layout="fill"
-                                    objectFit="cover"
-                                    className="transition-transform duration-300 hover:scale-105"
-                                    data-ai-hint={image.dataAiHint || "project image"}
-                                    priority={index === 0} // Prioritize first image
-                                  />
-                                </div>
-                              </CarouselItem>
-                            ))}
-                          </CarouselContent>
-                          {project.galleryImages.length > 1 && (
-                            <>
-                              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
-                              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
-                            </>
-                          )}
-                        </Carousel>
-                      ) : (
-                        <div className="relative w-full aspect-[4/3] bg-muted flex items-center justify-center">
-                           <ImageIcon className="h-16 w-16 text-muted-foreground" />
-                           <p className="text-muted-foreground ml-2">No images available</p>
-                        </div>
-                      )}
+              {/* Project Video - Conditional */}
+              {project.videoUrl && (
+                <ScrollAnimatedComponent animationType="slideInUp" delay={200}>
+                  <Card className="overflow-hidden shadow-xl max-w-3xl mx-auto">
+                    <CardHeader>
+                      <CardTitle className="text-xl flex items-center text-primary p-6 pb-0">
+                        <VideoIcon className="mr-2 h-5 w-5 text-accent" />
+                        Project Video
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="p-6">
-                       <CardTitle className="text-xl flex items-center text-primary">
-                         <ImageIcon className="mr-2 h-5 w-5 text-accent" />
-                         Project Gallery
-                       </CardTitle>
+                      <div className="aspect-video rounded-lg overflow-hidden border bg-muted">
+                        <video
+                          src={project.videoUrl}
+                          controls
+                          className="w-full h-full object-contain"
+                          poster="https://placehold.co/1600x900.png?text=Video+Preview" // Generic poster
+                          data-ai-hint="video preview"
+                        >
+                          Your browser does not support the video tag. Please ensure you have placed video files (e.g. MP4) in the `/public/videos` directory and the `videoUrl` in `portfolioData.ts` points to it correctly (e.g., `/videos/your-video.mp4`).
+                        </video>
+                      </div>
                     </CardContent>
                   </Card>
                 </ScrollAnimatedComponent>
+              )}
 
-                <div className="space-y-8">
-                  {project.videoUrl && (
-                    <ScrollAnimatedComponent animationType="slideInRight" delay={200}>
-                      <Card className="overflow-hidden shadow-xl">
-                        <CardHeader>
-                          <CardTitle className="text-xl flex items-center text-primary p-6 pb-0">
-                            <VideoIcon className="mr-2 h-5 w-5 text-accent" />
-                            Project Video
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-6">
-                          <div className="aspect-video rounded-lg overflow-hidden border">
-                            <iframe
-                              src={project.videoUrl}
-                              title={`${project.title} Video`}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              className="w-full h-full"
-                            ></iframe>
+              {/* Project Highlights */}
+              <ScrollAnimatedComponent animationType="slideInUp" delay={project.videoUrl ? 300 : 200}>
+                 <Card className="shadow-xl max-w-3xl mx-auto">
+                    <CardHeader>
+                       <CardTitle className="text-xl flex items-center text-primary">
+                         <Info className="mr-2 h-5 w-5 text-accent" /> {/* Using Info icon */}
+                         Project Highlights
+                       </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                       {project.tags && project.tags.length > 0 && (
+                        <div className="mb-4">
+                          <h3 className="text-lg font-semibold text-secondary-foreground mb-2">Categories:</h3>
+                          <div className="flex flex-wrap gap-2">
+                            {project.tags.map(tag => (
+                              <span key={tag} className="px-3 py-1 text-sm rounded-full bg-secondary text-secondary-foreground">{tag}</span>
+                            ))}
                           </div>
-                        </CardContent>
-                      </Card>
-                    </ScrollAnimatedComponent>
-                  )}
-
-                  <ScrollAnimatedComponent animationType="slideInRight" delay={project.videoUrl ? 300 : 200}>
-                     <Card className="shadow-xl">
-                        <CardHeader>
-                           <CardTitle className="text-xl text-primary">Project Highlights</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                           {project.tags && project.tags.length > 0 && (
-                            <div className="mb-4">
-                              <h3 className="text-lg font-semibold text-secondary-foreground mb-2">Categories:</h3>
-                              <div className="flex flex-wrap gap-2">
-                                {project.tags.map(tag => (
-                                  <span key={tag} className="px-3 py-1 text-sm rounded-full bg-secondary text-secondary-foreground">{tag}</span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                           <p className="text-muted-foreground">Further details about the project's scope, materials used, challenges overcome, and specific outcomes can be listed here. This section can be expanded as more structured data becomes available for each project.</p>
-                        </CardContent>
-                     </Card>
-                  </ScrollAnimatedComponent>
-                </div>
-              </div>
+                        </div>
+                      )}
+                       <p className="text-muted-foreground">
+                         Further details about the project's scope, materials used, challenges overcome, and specific outcomes can be listed here. This section can be expanded as more structured data becomes available for each project. You can describe the client's requirements, the solutions provided, and the overall impact of the project.
+                       </p>
+                    </CardContent>
+                 </Card>
+              </ScrollAnimatedComponent>
             </div>
           </section>
         </ScrollAnimatedComponent>

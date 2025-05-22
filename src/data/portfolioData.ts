@@ -1,4 +1,10 @@
 // src/data/portfolioData.ts
+
+// It's recommended to place your video files in the public/videos/ directory.
+// For example, if you have a video named 'my-project-tour.mp4', place it in 'public/videos/my-project-tour.mp4'.
+// Then, in your project data, use the path: videoUrl: '/videos/my-project-tour.mp4'.
+// Ensure your video files are optimized for web playback.
+
 export interface ProjectImage {
   url: string;
   alt: string;
@@ -9,16 +15,11 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  coverImageUrl: string; // Was imageUrl
-  dataAiHint?: string; // For coverImageUrl
+  coverImageUrl: string;
+  dataAiHint?: string; 
   galleryImages: ProjectImage[];
-  videoUrl?: string; // YouTube embed URL, e.g., https://www.youtube.com/embed/VIDEO_ID
+  videoUrl?: string; // Path to a local video file, e.g., /videos/project-a.mp4
   tags?: string[];
-  // Consider adding more detailed fields for the project detail page in the future, e.g.:
-  // detailedDescription?: string;
-  // client?: string;
-  // location?: string;
-  // completionDate?: string;
 }
 
 export const projectsData: Project[] = [
@@ -34,7 +35,7 @@ export const projectsData: Project[] = [
       { url: 'https://placehold.co/1200x800.png', alt: 'Modern Villa Pool Area', dataAiHint: 'villa pool' },
     ],
     tags: ['Residential', 'Modern', 'Luxury', 'Sustainable'],
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    videoUrl: '/videos/modern-villa-showcase.mp4', // Example local video path
   },
   {
     id: '2',
@@ -48,7 +49,7 @@ export const projectsData: Project[] = [
       { url: 'https://placehold.co/1200x800.png', alt: 'Innovate Hub Aerial View', dataAiHint: 'building aerial' },
     ],
     tags: ['Commercial', 'Office', 'Sustainable', 'Urban'],
-    videoUrl: 'https://www.youtube.com/embed/rokGy0huYEA',
+    videoUrl: '/videos/innovate-hub-flythrough.mp4', // Example local video path
   },
   {
     id: '3',
@@ -62,6 +63,7 @@ export const projectsData: Project[] = [
       { url: 'https://placehold.co/1200x800.png', alt: 'Grand Oak Manor Gardens', dataAiHint: 'manor garden' },
     ],
     tags: ['Restoration', 'Heritage', 'Historical', 'Preservation'],
+    // No videoUrl for this project
   },
    {
     id: '4',
@@ -75,6 +77,6 @@ export const projectsData: Project[] = [
       { url: 'https://placehold.co/1200x800.png', alt: 'Green Haven Interior Living Space', dataAiHint: 'eco interior' },
     ],
     tags: ['Residential', 'Sustainable', 'Eco-Friendly', 'Green Building'],
-    videoUrl: 'https://www.youtube.com/embed/BHACKCNDMW8',
+    videoUrl: '/videos/green-haven-tour.mp4', // Example local video path
   },
 ];

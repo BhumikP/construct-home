@@ -68,6 +68,33 @@
       ],
       "tags": ["Residential", "Sustainable", "Eco-Friendly", "Green Building"],
       "videoUrl": "/videos/green-haven-tour.mp4"
+    },
+    {
+      "id": "5",
+      "title": "City Center Plaza Revitalization",
+      "description": "Transforming an underutilized urban space into a vibrant public plaza and mixed-use development, fostering community engagement and economic growth. This project involved complex logistical planning and coordination with city authorities.",
+      "coverImageUrl": "https://placehold.co/800x600.png",
+      "dataAiHint": "urban plaza modern",
+      "galleryImages": [
+        { "url": "https://placehold.co/1200x800.png", "alt": "City Plaza Construction Aerial View", "dataAiHint": "city construction" },
+        { "url": "https://placehold.co/1200x800.png", "alt": "Designed Public Space Render", "dataAiHint": "public space" },
+        { "url": "https://placehold.co/1200x800.png", "alt": "Modern Architecture Evening Shot", "dataAiHint": "architecture evening" }
+      ],
+      "tags": ["Urban Development", "Mixed-Use", "Public Space", "Revitalization", "Commercial"],
+      "videoUrl": "/videos/city-plaza-timelapse.mp4"
+    },
+    {
+      "id": "6",
+      "title": "Greenwood Elementary School",
+      "description": "A new K-5 elementary school focused on sustainability and innovative learning environments. Features include natural light maximization, green roofs, rainwater harvesting systems, and collaborative classroom designs.",
+      "coverImageUrl": "https://placehold.co/800x600.png",
+      "dataAiHint": "modern school exterior",
+      "galleryImages": [
+        { "url": "https://placehold.co/1200x800.png", "alt": "School Playground with Children", "dataAiHint": "school playground" },
+        { "url": "https://placehold.co/1200x800.png", "alt": "Bright Interior Classroom", "dataAiHint": "classroom interior" },
+        { "url": "https://placehold.co/1200x800.png", "alt": "School Building with Green Roof", "dataAiHint": "green roof" }
+      ],
+      "tags": ["Educational", "Sustainable", "Green Building", "Community", "New Construction"]
     }
   ]
 }

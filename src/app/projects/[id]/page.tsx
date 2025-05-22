@@ -1,13 +1,15 @@
+
 // src/app/projects/[id]/page.tsx
 import type { Metadata, ResolvingMetadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { projectsData, type Project } from '@/data/portfolioData';
+import type { Project } from '@/data/portfolioData'; // Import type
+import contentData from '@/data/contentData.json'; // Import data from JSON
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Image as ImageIcon, Video as VideoIcon, Info, Tags } from 'lucide-react'; // Added Tags icon
+import { ArrowLeft, Image as ImageIcon, Video as VideoIcon, Info, Tags } from 'lucide-react';
 import { ScrollAnimatedComponent } from '@/components/ui/ScrollAnimatedComponent';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -19,6 +21,8 @@ import {
 } from "@/components/ui/carousel";
 import { Badge } from '@/components/ui/badge';
 
+const projects: Project[] = contentData.projectsData; // Type assertion
+
 type Props = {
   params: { id: string };
 };
@@ -28,7 +32,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const id = params.id;
-  const project = projectsData.find(p => p.id === id);
+  const project = projects.find(p => p.id === id);
 
   if (!project) {
     return {
@@ -68,7 +72,7 @@ export async function generateMetadata(
 }
 
 export default function ProjectDetailPage({ params }: Props) {
-  const project = projectsData.find(p => p.id === params.id);
+  const project = projects.find(p => p.id === params.id);
 
   if (!project) {
     notFound();
@@ -218,4 +222,3 @@ export default function ProjectDetailPage({ params }: Props) {
     </div>
   );
 }
-

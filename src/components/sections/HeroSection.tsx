@@ -1,3 +1,4 @@
+
 // src/components/sections/HeroSection.tsx
 "use client"; // Add this directive
 
@@ -5,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollAnimatedComponent } from '@/components/ui/ScrollAnimatedComponent';
 import Image from 'next/image';
 import type React from 'react';
+import contentData from '@/data/contentData.json';
 
 export function HeroSection({ id }: { id: string }) {
   const scrollToProjects = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -14,6 +16,8 @@ export function HeroSection({ id }: { id: string }) {
       projectsSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const { titlePart1, titleAccent, subtitle } = contentData.heroSection;
 
   return (
     <section id={id} className="relative min-h-screen flex items-center justify-center text-center text-white overflow-hidden">
@@ -33,12 +37,12 @@ export function HeroSection({ id }: { id: string }) {
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollAnimatedComponent animationType="slideInUp" delay={100}>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
-            Building Your Vision, <span className="text-accent">Brick by Brick</span>
+            {titlePart1}<span className="text-accent">{titleAccent}</span>
           </h1>
         </ScrollAnimatedComponent>
         <ScrollAnimatedComponent animationType="slideInUp" delay={300}>
           <p className="max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-neutral-200 mb-10">
-            We deliver high-quality construction services with a commitment to excellence, innovation, and client satisfaction.
+            {subtitle}
           </p>
         </ScrollAnimatedComponent>
         <ScrollAnimatedComponent animationType="fadeIn" delay={500}>

@@ -1,8 +1,11 @@
+
 // src/app/sitemap.xml/route.ts
 import { MetadataRoute } from 'next';
-import { projectsData } from '@/data/portfolioData'; // Import projects data
+import contentData from '@/data/contentData.json'; // Import data from JSON
+import type { Project } from '@/data/portfolioData'; // Import type
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+const projects: Project[] = contentData.projectsData; // Type assertion
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date().toISOString().split('T')[0]; // Current date as YYYY-MM-DD
@@ -26,7 +29,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
-    // Removed /#videos entry
     {
       url: `${APP_URL}/#contact`,
       lastModified: lastModified,
@@ -35,7 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const projectPages: MetadataRoute.Sitemap = projectsData.map((project) => ({
+  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
     url: `${APP_URL}/projects/${project.id}`,
     lastModified: lastModified, // Or use a project-specific lastModified date if available
     changeFrequency: 'yearly', // Assuming project details don't change often

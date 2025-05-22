@@ -1,8 +1,10 @@
+
 // src/components/sections/ContactSection.tsx
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Phone, MessageSquare } from 'lucide-react'; // MessageSquare for WhatsApp
 import { ScrollAnimatedComponent } from '@/components/ui/ScrollAnimatedComponent';
+import contentData from '@/data/contentData.json';
 
 // Replace with your actual contact details
 const CONTACT_PHONE = "+15551234567"; 
@@ -11,13 +13,14 @@ const WHATSAPP_NUMBER = "15551234567"; // International format without '+' or sp
 const WHATSAPP_MESSAGE = "Hello! I'm interested in your construction services.";
 
 export function ContactSection({ id }: { id: string }) {
+  const { title, subtitle } = contentData.contactSection;
   return (
     <section id={id} className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollAnimatedComponent animationType="fadeIn" className="text-center mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">Get In Touch</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">{title}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to start your next project? Contact us today for a consultation.
+            {subtitle}
           </p>
         </ScrollAnimatedComponent>
 

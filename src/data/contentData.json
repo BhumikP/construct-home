@@ -19,7 +19,7 @@
       "title": "Modern Villa Construction",
       "description": "A stunning modern villa featuring expansive glass walls, open-plan living, and sustainable materials. Completed on time and under budget. This project showcases our expertise in contemporary design and high-end residential construction.",
       "coverImageUrl": "https://placehold.co/800x600.png",
-      "dataAiHint": "modern villa luxury",
+      "dataAiHint": "modern villa",
       "galleryImages": [
         { "url": "https://placehold.co/1200x800.png", "alt": "Modern Villa Front View", "dataAiHint": "villa exterior" },
         { "url": "https://placehold.co/1200x800.png", "alt": "Modern Villa Living Room", "dataAiHint": "luxury interior" },
@@ -33,7 +33,7 @@
       "title": "Commercial Office Complex \"Innovate Hub\"",
       "description": "State-of-the-art office complex with energy-efficient design and flexible workspaces. A landmark project in the city center, Innovate Hub provides a dynamic environment for businesses to thrive.",
       "coverImageUrl": "https://placehold.co/800x600.png",
-      "dataAiHint": "office building city",
+      "dataAiHint": "office building",
       "galleryImages": [
         { "url": "https://placehold.co/1200x800.png", "alt": "Innovate Hub Exterior", "dataAiHint": "modern office" },
         { "url": "https://placehold.co/1200x800.png", "alt": "Innovate Hub Lobby", "dataAiHint": "office interior" },
@@ -47,7 +47,7 @@
       "title": "Heritage Building Restoration: The Grand Oak Manor",
       "description": "Meticulous restoration of a 19th-century heritage building, The Grand Oak Manor. We preserved its historical charm while upgrading to modern standards, ensuring its legacy for generations to come.",
       "coverImageUrl": "https://placehold.co/800x600.png",
-      "dataAiHint": "historic manor restoration",
+      "dataAiHint": "historic manor",
       "galleryImages": [
         { "url": "https://placehold.co/1200x800.png", "alt": "Grand Oak Manor Facade", "dataAiHint": "heritage building" },
         { "url": "https://placehold.co/1200x800.png", "alt": "Grand Oak Manor Interior Detail", "dataAiHint": "historic interior" },
@@ -60,7 +60,7 @@
       "title": "Eco-Friendly Residential Home: \"Green Haven\"",
       "description": "A beautiful eco-home named \"Green Haven\", designed with passive solar principles, rainwater harvesting, and locally sourced, sustainable materials. This project exemplifies our commitment to environmentally conscious building practices.",
       "coverImageUrl": "https://placehold.co/800x600.png",
-      "dataAiHint": "eco house nature",
+      "dataAiHint": "eco house",
       "galleryImages": [
         { "url": "https://placehold.co/1200x800.png", "alt": "Green Haven Exterior", "dataAiHint": "sustainable home" },
         { "url": "https://placehold.co/1200x800.png", "alt": "Green Haven Solar Panels", "dataAiHint": "solar panel" },
@@ -74,7 +74,7 @@
       "title": "City Center Plaza Revitalization",
       "description": "Transforming an underutilized urban space into a vibrant public plaza and mixed-use development, fostering community engagement and economic growth. This project involved complex logistical planning and coordination with city authorities.",
       "coverImageUrl": "https://placehold.co/800x600.png",
-      "dataAiHint": "urban plaza modern",
+      "dataAiHint": "urban plaza",
       "galleryImages": [
         { "url": "https://placehold.co/1200x800.png", "alt": "City Plaza Construction Aerial View", "dataAiHint": "city construction" },
         { "url": "https://placehold.co/1200x800.png", "alt": "Designed Public Space Render", "dataAiHint": "public space" },
@@ -88,7 +88,7 @@
       "title": "Greenwood Elementary School",
       "description": "A new K-5 elementary school focused on sustainability and innovative learning environments. Features include natural light maximization, green roofs, rainwater harvesting systems, and collaborative classroom designs.",
       "coverImageUrl": "https://placehold.co/800x600.png",
-      "dataAiHint": "modern school exterior",
+      "dataAiHint": "modern school",
       "galleryImages": [
         { "url": "https://placehold.co/1200x800.png", "alt": "School Playground with Children", "dataAiHint": "school playground" },
         { "url": "https://placehold.co/1200x800.png", "alt": "Bright Interior Classroom", "dataAiHint": "classroom interior" },

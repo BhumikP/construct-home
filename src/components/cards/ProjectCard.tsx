@@ -5,7 +5,7 @@ import type { Project } from '@/data/portfolioData';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react'; // Changed from ExternalLink
+import { ArrowRight } from 'lucide-react';
 import { ScrollAnimatedComponent } from '../ui/ScrollAnimatedComponent';
 
 interface ProjectCardProps {
@@ -21,7 +21,7 @@ export function ProjectCard({ project, animationDelay = 0 }: ProjectCardProps) {
           <Link href={`/projects/${project.id}`} aria-label={`View details for ${project.title}`}>
             <div className="relative w-full h-56 cursor-pointer">
               <Image
-                src={project.imageUrl}
+                src={project.coverImageUrl}
                 alt={project.title}
                 layout="fill"
                 objectFit="cover"

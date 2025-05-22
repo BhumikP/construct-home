@@ -10,6 +10,13 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Image as ImageIcon, Video as VideoIcon } from 'lucide-react';
 import { ScrollAnimatedComponent } from '@/components/ui/ScrollAnimatedComponent';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type Props = {
   params: { id: string };
@@ -28,9 +35,13 @@ export async function generateMetadata(
     };
   }
 
-  // Dynamically set APP_URL for metadataBase
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const metadataBase = new URL(appUrl);
+  
+  const imageUrl = project.galleryImages.length > 0 
+    ? project.galleryImages[0].url 
+    : project.coverImageUrl;
+  const absoluteImageUrl = imageUrl.startsWith('http') ? imageUrl : `${appUrl}${imageUrl}`;
 
   return {
     title: `${project.title} | Project Details | Construct Portfolio`,
@@ -39,18 +50,18 @@ export async function generateMetadata(
     openGraph: {
       title: `${project.title} | Construct Portfolio`,
       description: project.description,
-      images: project.imageUrl ? [{
-        url: project.imageUrl.startsWith('http') ? project.imageUrl : `${appUrl}${project.imageUrl}`, // Ensure absolute URL
-        width: 1200, // Adjust as needed
-        height: 630,  // Adjust as needed
+      images: [{
+        url: absoluteImageUrl,
+        width: 1200,
+        height: 630,
         alt: project.title,
-      }] : [],
+      }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${project.title} | Construct Portfolio`,
       description: project.description,
-      images: project.imageUrl ? [project.imageUrl.startsWith('http') ? project.imageUrl : `${appUrl}${project.imageUrl}`] : [],
+      images: [absoluteImageUrl],
     }
   };
 }
@@ -88,22 +99,49 @@ export default function ProjectDetailPage({ params }: Props) {
                 <ScrollAnimatedComponent animationType="slideInLeft" delay={100} className="md:sticky md:top-24">
                   <Card className="overflow-hidden shadow-xl">
                     <CardHeader className="p-0">
-                      <div className="relative w-full aspect-[4/3] bg-muted">
-                        <Image
-                          src={project.imageUrl}
-                          alt={project.title}
-                          layout="fill"
-                          objectFit="cover"
-                          className="transition-transform duration-300 hover:scale-105"
-                          data-ai-hint={project.dataAiHint || "project image"}
-                          priority
-                        />
-                      </div>
+                      {project.galleryImages && project.galleryImages.length > 0 ? (
+                        <Carousel
+                          opts={{
+                            align: "start",
+                            loop: true,
+                          }}
+                          className="w-full"
+                        >
+                          <CarouselContent>
+                            {project.galleryImages.map((image, index) => (
+                              <CarouselItem key={index}>
+                                <div className="relative w-full aspect-[4/3] bg-muted">
+                                  <Image
+                                    src={image.url}
+                                    alt={image.alt || `${project.title} - Image ${index + 1}`}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="transition-transform duration-300 hover:scale-105"
+                                    data-ai-hint={image.dataAiHint || "project image"}
+                                    priority={index === 0} // Prioritize first image
+                                  />
+                                </div>
+                              </CarouselItem>
+                            ))}
+                          </CarouselContent>
+                          {project.galleryImages.length > 1 && (
+                            <>
+                              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
+                              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
+                            </>
+                          )}
+                        </Carousel>
+                      ) : (
+                        <div className="relative w-full aspect-[4/3] bg-muted flex items-center justify-center">
+                           <ImageIcon className="h-16 w-16 text-muted-foreground" />
+                           <p className="text-muted-foreground ml-2">No images available</p>
+                        </div>
+                      )}
                     </CardHeader>
                     <CardContent className="p-6">
                        <CardTitle className="text-xl flex items-center text-primary">
                          <ImageIcon className="mr-2 h-5 w-5 text-accent" />
-                         Project Snapshot
+                         Project Gallery
                        </CardTitle>
                     </CardContent>
                   </Card>
@@ -151,7 +189,6 @@ export default function ProjectDetailPage({ params }: Props) {
                               </div>
                             </div>
                           )}
-                          {/* Add more details here if available in project data */}
                            <p className="text-muted-foreground">Further details about the project's scope, materials used, challenges overcome, and specific outcomes can be listed here. This section can be expanded as more structured data becomes available for each project.</p>
                         </CardContent>
                      </Card>

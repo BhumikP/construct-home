@@ -1,19 +1,23 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Reddit_Sans, Reddit_Mono } from 'next/font/google'; // Changed from Geist
 import './globals.css';
-import { Toaster } from '@/components/ui/toaster'; // Assuming Toaster might be used
+import { Toaster } from '@/components/ui/toaster';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+// Initialize Reddit Sans font
+const redditSans = Reddit_Sans({
+  variable: '--font-reddit-sans',
   subsets: ['latin'],
+  display: 'swap', // Ensures text remains visible during font loading
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+// Initialize Reddit Mono font
+const redditMono = Reddit_Mono({
+  variable: '--font-reddit-mono',
   subsets: ['latin'],
+  display: 'swap', // Ensures text remains visible during font loading
 });
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'; // Define your app URL
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 export const metadata: Metadata = {
   title: 'Construct Portfolio | Quality Construction Services',
@@ -27,7 +31,7 @@ export const metadata: Metadata = {
     siteName: 'Construct Portfolio',
     images: [
       {
-        url: `${APP_URL}/og-image.png`, // Replace with your actual OG image URL
+        url: `${APP_URL}/og-image.png`,
         width: 1200,
         height: 630,
         alt: 'Construct Portfolio Projects Showcase',
@@ -40,7 +44,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Construct Portfolio | Quality Construction Services',
     description: 'Explore our diverse range of construction projects and professional services.',
-    images: [`${APP_URL}/twitter-image.png`], // Replace with your actual Twitter image URL
+    images: [`${APP_URL}/twitter-image.png`],
   },
   robots: {
     index: true,
@@ -59,11 +63,11 @@ const schemaData = {
   "@context": "https://schema.org",
   "@type": "ConstructionBusiness",
   "name": "Construct Portfolio",
-  "image": `${APP_URL}/logo-schema.png`, // Replace with your actual logo URL for schema
+  "image": `${APP_URL}/logo-schema.png`,
   "url": APP_URL,
-  "telephone": "+1-555-123-4567", // Replace with actual phone number
+  "telephone": "+1-555-123-4567",
   "description": "Specializing in high-quality construction projects, renovations, and new builds. View our portfolio to see our commitment to excellence.",
-  "address": { // Optional: Add if you want to display a physical address
+  "address": {
     "@type": "PostalAddress",
     "streetAddress": "123 Construct Ave",
     "addressLocality": "Builderville",
@@ -76,7 +80,6 @@ const schemaData = {
     "telephone": "+1-555-123-4567",
     "contactType": "customer service"
   },
-  // "priceRange" : "$$$", // Optional: Indicate general price range
   "potentialAction": {
     "@type": "ViewAction",
     "target": `${APP_URL}/#projects`
@@ -98,7 +101,7 @@ export default function RootLayout({
         />
       </head>
       <body 
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
+        className={`${redditSans.variable} ${redditMono.variable} font-sans antialiased`} // Updated font variables
         suppressHydrationWarning={true}
       >
         {children}

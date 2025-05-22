@@ -1,7 +1,8 @@
 // src/components/ui/ScrollAnimatedComponent.tsx
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
+import { motion, useInView, type Variants, type HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 type AnimationType = 'fadeIn' | 'slideInUp' | 'slideInLeft' | 'slideInRight' | 'zoomIn';
@@ -10,12 +11,35 @@ interface ScrollAnimatedComponentProps {
   children: ReactNode;
   className?: string;
   animationType?: AnimationType;
-  delay?: number; // in ms, for CSS transition-delay
-  duration?: number; // in ms, for CSS transition-duration
-  threshold?: number;
+  delay?: number; // in ms
+  duration?: number; // in ms
+  threshold?: number; // IntersectionObserver threshold (0 to 1)
   triggerOnce?: boolean;
-  as?: keyof JSX.IntrinsicElements; // Allows specifying the wrapping HTML element
+  as?: keyof JSX.IntrinsicElements;
 }
+
+const animationVariants: Record<AnimationType, Variants> = {
+  fadeIn: {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  },
+  slideInUp: {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  },
+  slideInLeft: {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+  },
+  slideInRight: {
+    hidden: { opacity: 0, x: 20 },
+    visible: { opacity: 1, x: 0 },
+  },
+  zoomIn: {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1 },
+  },
+};
 
 export const ScrollAnimatedComponent: React.FC<ScrollAnimatedComponentProps> = ({
   children,
@@ -25,72 +49,30 @@ export const ScrollAnimatedComponent: React.FC<ScrollAnimatedComponentProps> = (
   duration = 700,
   threshold = 0.1,
   triggerOnce = true,
-  as: Element = 'div',
+  as = 'div',
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { 
+    once: triggerOnce, 
+    amount: threshold 
+  });
 
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (triggerOnce) {
-            observer.unobserve(element);
-          }
-        } else if (!triggerOnce) {
-          setIsVisible(false);
-        }
-      },
-      { threshold }
-    );
-
-    observer.observe(element);
-    return () => {
-      if (element) { // Check if element exists before unobserving
-        observer.unobserve(element);
-      }
-    };
-  }, [threshold, triggerOnce]);
-
-  const getAnimationClasses = () => {
-    const baseTransition = `transition-all ease-out`;
-    if (!isVisible) {
-      switch (animationType) {
-        case 'fadeIn':
-          return 'opacity-0';
-        case 'slideInUp':
-          return 'opacity-0 translate-y-10';
-        case 'slideInLeft':
-          return 'opacity-0 -translate-x-10';
-        case 'slideInRight':
-          return 'opacity-0 translate-x-10';
-        case 'zoomIn':
-          return 'opacity-0 scale-90';
-        default:
-          return 'opacity-0';
-      }
-    }
-    return 'opacity-100 translate-y-0 translate-x-0 scale-100';
-  };
+  const MotionComponent = motion[as as keyof typeof motion] || motion.div;
 
   return (
-    <Element
-      ref={ref as any} // TODO: Fix type for ref based on 'as' prop if necessary
-      className={cn(
-        'transition-all ease-out',
-        getAnimationClasses(),
-        className
-      )}
-      style={{
-        transitionDuration: `${duration}ms`,
-        transitionDelay: `${delay}ms`,
+    <MotionComponent
+      ref={ref as any}
+      className={cn(className)}
+      variants={animationVariants[animationType]}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      transition={{
+        duration: duration / 1000, // Framer Motion uses seconds
+        delay: delay / 1000,       // Framer Motion uses seconds
+        ease: 'easeOut',
       }}
     >
       {children}
-    </Element>
+    </MotionComponent>
   );
 };

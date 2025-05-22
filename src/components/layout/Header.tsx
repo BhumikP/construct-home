@@ -76,9 +76,7 @@ export function Header() {
 
 
   const NavLinkItems = ({isMobile = false}: {isMobile?: boolean}) => navLinks.map((link) => {
-    const NavElement = isMobile ? SheetClose : 'a';
-    const commonProps = {
-        key: link.href,
+    const linkElementProps = {
         href: link.href,
         onClick: scrollToSection(link.href),
         className: cn(
@@ -93,7 +91,7 @@ export function Header() {
     if (isMobile) {
         return (
             <SheetClose asChild key={link.href}>
-                <button {...commonProps} type="button" className={commonProps.className}>
+                <button {...linkElementProps} type="button">
                     {link.label}
                 </button>
             </SheetClose>
@@ -101,7 +99,7 @@ export function Header() {
     }
 
     return (
-      <a {...commonProps}>
+      <a key={link.href} {...linkElementProps}>
         {link.label}
       </a>
     );

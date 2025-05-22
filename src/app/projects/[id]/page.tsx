@@ -7,7 +7,7 @@ import { projectsData, type Project } from '@/data/portfolioData';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Image as ImageIcon, Video as VideoIcon, Info } from 'lucide-react'; // Added Info icon
+import { ArrowLeft, Image as ImageIcon, Video as VideoIcon, Info, Tags } from 'lucide-react'; // Added Tags icon
 import { ScrollAnimatedComponent } from '@/components/ui/ScrollAnimatedComponent';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -17,6 +17,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Badge } from '@/components/ui/badge';
 
 type Props = {
   params: { id: string };
@@ -87,68 +88,86 @@ export default function ProjectDetailPage({ params }: Props) {
                 </Link>
               </Button>
 
-              <div className="text-center">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-4 md:mb-6">
-                  {project.title}
-                </h1>
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  {project.description}
-                </p>
-              </div>
-              
-              {/* Image Gallery Carousel */}
-              <ScrollAnimatedComponent animationType="slideInUp" delay={100}>
-                <Card className="overflow-hidden shadow-xl max-w-4xl mx-auto">
-                  <CardHeader className="p-0">
-                    {project.galleryImages && project.galleryImages.length > 0 ? (
-                      <Carousel
-                        opts={{
-                          align: "start",
-                          loop: true,
-                        }}
-                        className="w-full"
-                      >
-                        <CarouselContent>
-                          {project.galleryImages.map((image, index) => (
-                            <CarouselItem key={index}>
-                              <div className="relative w-full aspect-[16/10] bg-muted">
-                                <Image
-                                  src={image.url}
-                                  alt={image.alt || `${project.title} - Image ${index + 1}`}
-                                  layout="fill"
-                                  objectFit="cover"
-                                  className="transition-transform duration-300 hover:scale-105"
-                                  data-ai-hint={image.dataAiHint || "project image"}
-                                  priority={index === 0} 
-                                />
-                              </div>
-                            </CarouselItem>
+              <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+                {/* Column 1: Image Gallery Carousel */}
+                <ScrollAnimatedComponent animationType="slideInLeft" delay={0}>
+                  <Card className="overflow-hidden shadow-xl w-full">
+                    <CardHeader className="p-0">
+                      {project.galleryImages && project.galleryImages.length > 0 ? (
+                        <Carousel
+                          opts={{
+                            align: "start",
+                            loop: true,
+                          }}
+                          className="w-full"
+                        >
+                          <CarouselContent>
+                            {project.galleryImages.map((image, index) => (
+                              <CarouselItem key={index}>
+                                <div className="relative w-full aspect-[16/10] bg-muted">
+                                  <Image
+                                    src={image.url}
+                                    alt={image.alt || `${project.title} - Image ${index + 1}`}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="transition-transform duration-300 hover:scale-105"
+                                    data-ai-hint={image.dataAiHint || "project image"}
+                                    priority={index === 0} 
+                                  />
+                                </div>
+                              </CarouselItem>
+                            ))}
+                          </CarouselContent>
+                          {project.galleryImages.length > 1 && (
+                            <>
+                              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
+                              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
+                            </>
+                          )}
+                        </Carousel>
+                      ) : (
+                        <div className="relative w-full aspect-[16/10] bg-muted flex items-center justify-center">
+                           <ImageIcon className="h-16 w-16 text-muted-foreground" />
+                           <p className="text-muted-foreground ml-2">No gallery images available</p>
+                        </div>
+                      )}
+                    </CardHeader>
+                    <CardContent className="p-6">
+                       <CardTitle className="text-xl flex items-center text-primary">
+                         <ImageIcon className="mr-2 h-5 w-5 text-accent" />
+                         Project Gallery
+                       </CardTitle>
+                    </CardContent>
+                  </Card>
+                </ScrollAnimatedComponent>
+
+                {/* Column 2: Title, Description, Tags */}
+                <ScrollAnimatedComponent animationType="slideInRight" delay={100}>
+                  <div className="space-y-6">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary">
+                      {project.title}
+                    </h1>
+                    <p className="text-lg text-muted-foreground">
+                      {project.description}
+                    </p>
+                    {project.tags && project.tags.length > 0 && (
+                      <div>
+                        <h3 className="text-xl font-semibold text-primary mb-3 flex items-center">
+                          <Tags className="mr-2 h-5 w-5 text-accent" />
+                          Categories
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map(tag => (
+                            <Badge key={tag} variant="secondary" className="px-3 py-1 text-sm">{tag}</Badge>
                           ))}
-                        </CarouselContent>
-                        {project.galleryImages.length > 1 && (
-                          <>
-                            <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
-                            <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-background/50 hover:bg-background/75 text-primary" />
-                          </>
-                        )}
-                      </Carousel>
-                    ) : (
-                      <div className="relative w-full aspect-[16/10] bg-muted flex items-center justify-center">
-                         <ImageIcon className="h-16 w-16 text-muted-foreground" />
-                         <p className="text-muted-foreground ml-2">No gallery images available</p>
+                        </div>
                       </div>
                     )}
-                  </CardHeader>
-                  <CardContent className="p-6">
-                     <CardTitle className="text-xl flex items-center text-primary">
-                       <ImageIcon className="mr-2 h-5 w-5 text-accent" />
-                       Project Gallery
-                     </CardTitle>
-                  </CardContent>
-                </Card>
-              </ScrollAnimatedComponent>
-
-              {/* Project Video - Conditional */}
+                  </div>
+                </ScrollAnimatedComponent>
+              </div>
+              
+              {/* Project Video - Conditional (Full width below the grid) */}
               {project.videoUrl && (
                 <ScrollAnimatedComponent animationType="slideInUp" delay={200}>
                   <Card className="overflow-hidden shadow-xl max-w-3xl mx-auto">
@@ -175,26 +194,16 @@ export default function ProjectDetailPage({ params }: Props) {
                 </ScrollAnimatedComponent>
               )}
 
-              {/* Project Highlights */}
+              {/* Project Highlights (Full width below) */}
               <ScrollAnimatedComponent animationType="slideInUp" delay={project.videoUrl ? 300 : 200}>
                  <Card className="shadow-xl max-w-3xl mx-auto">
                     <CardHeader>
                        <CardTitle className="text-xl flex items-center text-primary">
-                         <Info className="mr-2 h-5 w-5 text-accent" /> {/* Using Info icon */}
+                         <Info className="mr-2 h-5 w-5 text-accent" />
                          Project Highlights
                        </CardTitle>
                     </CardHeader>
                     <CardContent>
-                       {project.tags && project.tags.length > 0 && (
-                        <div className="mb-4">
-                          <h3 className="text-lg font-semibold text-secondary-foreground mb-2">Categories:</h3>
-                          <div className="flex flex-wrap gap-2">
-                            {project.tags.map(tag => (
-                              <span key={tag} className="px-3 py-1 text-sm rounded-full bg-secondary text-secondary-foreground">{tag}</span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
                        <p className="text-muted-foreground">
                          Further details about the project's scope, materials used, challenges overcome, and specific outcomes can be listed here. This section can be expanded as more structured data becomes available for each project. You can describe the client's requirements, the solutions provided, and the overall impact of the project.
                        </p>
@@ -209,3 +218,4 @@ export default function ProjectDetailPage({ params }: Props) {
     </div>
   );
 }
+

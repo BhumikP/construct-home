@@ -1,3 +1,4 @@
+
 // src/components/cards/ProjectCard.tsx
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,8 +24,9 @@ export function ProjectCard({ project, animationDelay = 0 }: ProjectCardProps) {
               <Image
                 src={project.coverImageUrl}
                 alt={project.title}
-                layout="fill"
-                objectFit="cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                style={{ objectFit: "cover" }}
                 className="transition-transform duration-300 group-hover:scale-105"
                 data-ai-hint={project.dataAiHint || "architecture"}
               />

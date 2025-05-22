@@ -112,8 +112,9 @@ export default function ProjectDetailPage({ params }: Props) {
                                   <Image
                                     src={image.url}
                                     alt={image.alt || `${project.title} - Image ${index + 1}`}
-                                    layout="fill"
-                                    objectFit="cover"
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    style={{ objectFit: "cover" }}
                                     className="transition-transform duration-300 hover:scale-105"
                                     data-ai-hint={image.dataAiHint || "project image"}
                                     priority={index === 0} 
@@ -186,11 +187,12 @@ export default function ProjectDetailPage({ params }: Props) {
                         <video
                           src={project.videoUrl}
                           controls
+                          preload="metadata"
                           className="w-full h-full object-contain"
                           poster="https://placehold.co/1600x900.png"
                           data-ai-hint="video preview"
                         >
-                          Your browser does not support the video tag. Please ensure you have placed video files (e.g. MP4) in the `/public/videos` directory and the `videoUrl` in `portfolioData.ts` points to it correctly (e.g., `/videos/your-video.mp4`).
+                          Your browser does not support the video tag. Please ensure you have placed video files (e.g. MP4) in the `/public/videos` directory and the `videoUrl` in `contentData.json` points to it correctly (e.g., `/videos/your-video.mp4`).
                         </video>
                       </div>
                     </CardContent>
